@@ -5,6 +5,7 @@ import { chromium } from "playwright";
 
 const outputDir = path.resolve("docs/submission/video-raw");
 const outputPath = path.resolve("docs/submission/backbrief-screen.webm");
+const demoUrl = process.env.BACKBRIEF_DEMO_URL ?? "https://backbrief.vercel.app";
 
 await mkdir(outputDir, { recursive: true });
 
@@ -18,7 +19,7 @@ const context = await browser.newContext({
 });
 
 const page = await context.newPage();
-await page.goto("https://backbrief.vercel.app", {
+await page.goto(demoUrl, {
   waitUntil: "domcontentloaded",
   timeout: 60_000,
 });
@@ -38,7 +39,11 @@ const analysis = page.waitForResponse(
 await page.getByRole("button", { name: "BUILD MY BACKBRIEF →" }).click();
 await analysis;
 await page.locator(".handoff").scrollIntoViewIfNeeded();
-await page.waitForTimeout(23_000);
+await page.waitForTimeout(7_000);
+await page.locator(".claim-grid article:nth-child(2) .evidence-ref:not(:disabled)").first().click();
+await page.waitForTimeout(8_000);
+await page.getByRole("button", { name: "Close source evidence" }).click();
+await page.waitForTimeout(7_000);
 
 await page.locator(".briefing").scrollIntoViewIfNeeded();
 await page.waitForTimeout(9_000);

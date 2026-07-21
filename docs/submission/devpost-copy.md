@@ -38,6 +38,9 @@ line references. It then runs a three-question reverse brief, one question at a
 time. The developer answers in their own words, receives concise teaching, and
 finishes with a recap they can carry forward.
 
+Every evidence reference is interactive. Selecting it opens the exact original
+session or diff lines in an audit plate without leaving the handoff.
+
 The public app includes a fictional email-queue example, so judges can complete
 the full flow without an account, repository, API key, or local installation.
 
@@ -74,9 +77,9 @@ and logging, bounds inputs, and keeps raw evidence out of the coaching call.
 ## Accomplishments
 
 - A complete no-login teaching loop powered by real GPT-5.6 calls.
-- Evidence-cited handoffs rather than unsupported prose summaries.
+- Auditable evidence-cited handoffs with exact source lines one click away.
 - Free-response coaching without scores, correctness labels, or merge verdicts.
-- Twenty-one passing behavioral tests plus lint, typecheck, and production build.
+- Twenty-four passing behavioral tests plus lint, typecheck, and production build.
 - Zero Semgrep findings and no detected lethal-trifecta co-location.
 - Verified desktop and mobile flows on the production deployment.
 
@@ -105,8 +108,15 @@ Backbrief will remain educational and non-gating.
 1. Open the live app; no login is required.
 2. Keep **Use the 60-second sample** selected.
 3. Check the OpenAI consent box and click **Build my Backbrief**.
-4. Read the evidence-cited handoff.
+4. Read the evidence-cited handoff and select any `S…` or `D…` citation to inspect
+   its exact source lines.
 5. Answer each of the three questions in a sentence or two and continue to the
    recap.
 
 Expected completion time: about 2 minutes.
+
+## Supported platforms
+
+The primary judge path is the public web app in a current desktop or mobile
+browser. It has been exercised in Safari and Chromium at desktop and mobile
+viewport sizes. No extension, plugin, or local installation is required.

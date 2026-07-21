@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import type { Coaching, Handoff } from "../lib/contracts";
+import { resolveEvidenceReference, type EvidenceExcerpt } from "../lib/evidence";
 
 type Source = "sample" | "custom";
 type Stage = "evidence" | "handoff" | "recap";
@@ -12,8 +13,73 @@ type Props = {
   sampleDiff: string;
 };
 
+type EvidenceSources = {
+  sessionText: string;
+  diffText: string;
+};
+
 function claimMarker(kind: "intent" | "implementation" | "consequences") {
   return { intent: "I", implementation: "M", consequences: "C" }[kind];
+}
+
+function EvidenceRefs({
+  references,
+  sources,
+  activeReference,
+  onSelect,
+}: {
+  references: string[];
+  sources: EvidenceSources;
+  activeReference: string | null;
+  onSelect: (reference: string) => void;
+}) {
+  return (
+    <div className="refs" aria-label="Evidence references">
+      {references.map((reference, index) => {
+        const excerpt = resolveEvidenceReference(reference, sources);
+        return (
+          <button
+            className="evidence-ref"
+            type="button"
+            key={`${reference}-${index}`}
+            disabled={!excerpt}
+            aria-pressed={activeReference === reference}
+            aria-label={excerpt ? `View ${reference} from ${excerpt.sourceLabel}` : `${reference} is unavailable`}
+            onClick={() => onSelect(reference)}
+          >
+            {reference}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function EvidencePlate({ excerpt, onClose }: { excerpt: EvidenceExcerpt; onClose: () => void }) {
+  return (
+    <aside className="evidence-plate" role="dialog" aria-labelledby="evidence-plate-heading">
+      <div className="evidence-plate-head">
+        <div>
+          <p>TRACE / {excerpt.reference}</p>
+          <h2 id="evidence-plate-heading">Source evidence</h2>
+        </div>
+        <button type="button" onClick={onClose} aria-label="Close source evidence">CLOSE ×</button>
+      </div>
+      <div className={`evidence-source-tag source-${excerpt.prefix.toLowerCase()}`}>
+        <b>{excerpt.prefix}</b>
+        <span>{excerpt.sourceLabel}</span>
+        <small>{excerpt.lines.length} {excerpt.lines.length === 1 ? "line" : "lines"}</small>
+      </div>
+      <ol className="evidence-lines" start={excerpt.lines[0]?.number}>
+        {excerpt.lines.map((line) => (
+          <li key={line.number} value={line.number}>
+            <code>{line.text || " "}</code>
+          </li>
+        ))}
+      </ol>
+      <p className="evidence-plate-foot">Exact input · held only in this browser session</p>
+    </aside>
+  );
 }
 
 export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
@@ -29,15 +95,21 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
   const [coaching, setCoaching] = useState<Coaching[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [activeReference, setActiveReference] = useState<string | null>(null);
 
   const canAnalyze =
     consent && sessionText.trim().length >= 40 && diffText.trim().length >= 40 && !busy;
   const currentQuestion = handoff?.questions[questionIndex];
   const progress = useMemo(() => (questionIndex / 3) * 100, [questionIndex]);
+  const evidenceSources = { sessionText, diffText };
+  const activeEvidence = activeReference
+    ? resolveEvidenceReference(activeReference, evidenceSources)
+    : null;
 
   function chooseSource(next: Source) {
     setSource(next);
     setError("");
+    setActiveReference(null);
     if (next === "sample") {
       setSessionText(sampleSession);
       setDiffText(sampleDiff);
@@ -68,6 +140,7 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
       setQuestionIndex(0);
       setAnswers([]);
       setCoaching([]);
+      setActiveReference(null);
       setStage("handoff");
       requestAnimationFrame(() => document.querySelector("#handoff")?.scrollIntoView({ behavior: "smooth" }));
     } catch (caught) {
@@ -122,6 +195,7 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
     setCoaching([]);
     setAnswer("");
     setError("");
+    setActiveReference(null);
     requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
@@ -212,7 +286,12 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
                 {handoff[kind].map((item, index) => (
                   <div className="claim" key={`${kind}-${index}`}>
                     <p>{item.claim}</p>
-                    <span>{item.refs.join(" · ")}</span>
+                    <EvidenceRefs
+                      references={item.refs}
+                      sources={evidenceSources}
+                      activeReference={activeReference}
+                      onSelect={setActiveReference}
+                    />
                   </div>
                 ))}
               </article>
@@ -233,7 +312,12 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
           <div className="question-layout">
             <div className="question-index"><span>QUESTION</span><b>0{questionIndex + 1}</b><small>OF 03</small></div>
             <div className="question-body">
-              <div className="refs">{currentQuestion.evidenceRefs.join(" · ")}</div>
+              <EvidenceRefs
+                references={currentQuestion.evidenceRefs}
+                sources={evidenceSources}
+                activeReference={activeReference}
+                onSelect={setActiveReference}
+              />
               <h3>{currentQuestion.prompt}</h3>
               <p className="why">Why it matters: {currentQuestion.whyItMatters}</p>
               {!coaching[questionIndex] ? (
@@ -278,6 +362,10 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
           </div>
           <button className="primary-button light" onClick={restart}>BACKBRIEF ANOTHER CHANGE →</button>
         </section>
+      )}
+
+      {activeEvidence && (
+        <EvidencePlate excerpt={activeEvidence} onClose={() => setActiveReference(null)} />
       )}
 
       <footer>

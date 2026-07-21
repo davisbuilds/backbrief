@@ -86,7 +86,10 @@ button:focus-visible, textarea:focus-visible, input:focus-visible, a:focus-visib
 .claim-title h3 { text-transform: uppercase; font-size: 11px; letter-spacing: .1em; margin: 0; }
 .claim { border-top: 1px solid #44413b; padding: 18px 0; }
 .claim p { font-family: var(--font-display), serif; font-size: 20px; line-height: 1.25; margin: 0 0 14px; }
-.claim span, .refs { color: #8fa4ff; font-size: 10px; letter-spacing: .08em; }
+.refs { color: #8fa4ff; display: flex; flex-wrap: wrap; gap: 7px; font-size: 10px; letter-spacing: .08em; }
+.evidence-ref { border: 1px solid currentColor; border-radius: 999px; background: transparent; color: inherit; padding: 5px 9px; font-size: 10px; letter-spacing: .08em; cursor: pointer; }
+.evidence-ref:hover:not(:disabled), .evidence-ref[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: white; }
+.evidence-ref:disabled { cursor: not-allowed; opacity: .42; text-decoration: line-through; }
 .briefing { background: var(--paper); }
 .progress { height: 2px; background: var(--line); margin-bottom: 62px; }
 .progress span { display: block; height: 100%; background: var(--red); transition: width .3s; }
@@ -115,6 +118,20 @@ button:focus-visible, textarea:focus-visible, input:focus-visible, a:focus-visib
 .recap-list p { font-family: var(--font-display), serif; font-size: 21px; }
 .recap-list .answer-quote { color: #d8e0ff; }
 .primary-button.light { background: var(--paper-bright); color: var(--ink); }
+.evidence-plate { position: fixed; z-index: 20; right: 24px; bottom: 24px; width: min(560px, calc(100vw - 48px)); max-height: min(680px, calc(100vh - 48px)); overflow: hidden; border: 1px solid var(--ink); background: var(--paper-bright); color: var(--ink); box-shadow: 12px 12px 0 var(--blue); }
+.evidence-plate-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 20px; background: var(--blue); color: white; }
+.evidence-plate-head p { margin: 0 0 5px; color: #ccd6ff; font-size: 9px; letter-spacing: .14em; }
+.evidence-plate-head h2 { margin: 0; font-family: var(--font-display), serif; font-size: 30px; font-weight: 400; letter-spacing: -.03em; }
+.evidence-plate-head button { align-self: flex-start; border: 0; background: transparent; color: white; padding: 3px; font-size: 9px; letter-spacing: .1em; cursor: pointer; }
+.evidence-source-tag { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 10px; min-height: 45px; padding: 8px 18px; border-bottom: 1px solid var(--ink); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.evidence-source-tag b { display: grid; place-items: center; width: 28px; height: 28px; background: var(--blue); color: white; }
+.evidence-source-tag.source-d b { background: var(--red); }
+.evidence-source-tag small { color: var(--muted); font-size: 9px; }
+.evidence-lines { max-height: min(380px, calc(100vh - 230px)); overflow: auto; margin: 0; padding: 12px 18px 12px 60px; background: #f8f1e4; }
+.evidence-lines li { min-height: 34px; padding: 8px 10px; border-bottom: 1px solid #d8d0c2; font-size: 10px; line-height: 1.55; }
+.evidence-lines li::marker { color: var(--red); font-weight: 600; content: "[" counter(list-item) "]  "; }
+.evidence-lines code { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+.evidence-plate-foot { margin: 0; padding: 10px 18px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }
 footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px clamp(20px, 5vw, 76px); background: var(--ink); color: #9a968c; font-size: 9px; letter-spacing: .08em; }
 
 @media (max-width: 800px) {
@@ -132,6 +149,11 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px
   .question-index { border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; align-items: baseline; gap: 16px; padding-bottom: 18px; }
   .question-index b { font-size: 58px; margin: 0; }
   .coaching-note dl div { grid-template-columns: 1fr; gap: 8px; }
+  .evidence-plate { right: 12px; bottom: 12px; width: calc(100vw - 24px); max-height: calc(100vh - 24px); box-shadow: 7px 7px 0 var(--blue); }
+  .evidence-plate-head { padding: 14px 16px; }
+  .evidence-plate-head h2 { font-size: 26px; }
+  .evidence-source-tag { padding-inline: 14px; }
+  .evidence-lines { max-height: calc(100vh - 205px); padding-left: 50px; }
   footer { flex-direction: column; }
 }
 

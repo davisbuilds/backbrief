@@ -1,7 +1,7 @@
 ---
 date: 2026-07-21
 status: draft
-target-duration: 2m15s
+target-duration: 2m45s
 ---
 
 # Backbrief Demo Script
@@ -17,7 +17,9 @@ OpenAI only after explicit consent.
 When I build the Backbrief, GPT-5.6 receives line-numbered session and diff
 evidence. Structured Outputs turn that into a grounded handoff with three views:
 the requested intent, the actual implementation, and the consequences a human
-owner needs to carry. Every claim points back to session or diff lines.
+owner needs to carry. Every claim points back to session or diff lines. Selecting
+any citation opens the exact original lines, so the handoff is auditable instead
+of asking the developer to trust a fluent summary.
 
 This is deliberately not another approval bot. It does not score the change or
 decide whether to merge it. Instead, it asks me to brief the change back, one

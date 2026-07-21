@@ -16,6 +16,14 @@ The app opens with a fictional, sanitized email-queue example. Check the consent
 box and click **Build my Backbrief**; no account or setup is needed. You can also
 paste your own coding session and `git diff`.
 
+### Supported platforms
+
+The judge path is the public web app in any current desktop or mobile browser;
+the deployed flow has been exercised in Safari and Chromium at desktop and
+mobile viewport sizes. Local development is supported anywhere Node.js 24 and
+pnpm 10 run. No browser extension, Codex plugin, or operating-system integration
+is required.
+
 ![Backbrief evidence desk](docs/assets/backbrief-hero.png)
 
 ![Backbrief grounded handoff](docs/assets/backbrief-handoff.png)
@@ -47,6 +55,8 @@ flowchart LR
 
 - The server labels every session line `S1…Sn` and diff line `D1…Dn` so GPT-5.6
   can cite its evidence.
+- Every citation is interactive: select it to inspect the exact source lines in
+  an in-browser evidence plate.
 - Structured Outputs constrain both the handoff and coaching responses with Zod
   schemas.
 - Raw session and diff text are sent only to the analysis call. Coaching sees
