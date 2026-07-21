@@ -55,7 +55,7 @@ export function createAnalyzeHandler(
       });
       return Response.json({
         handoff,
-        meta: { model: DEFAULT_MODEL, requestId },
+        meta: { model: process.env.OPENAI_MODEL || DEFAULT_MODEL, requestId },
       });
     } catch {
       return errorResponse(

@@ -32,7 +32,9 @@ flow, verification, deployment, repository, and submission assets.
 - The repository is greenfield and has no existing consumers or compatibility
   promises.
 - The server has `OPENAI_API_KEY`; browsers never receive it.
-- GPT-5.6 Terra balances reasoning quality, latency, and public-demo cost.
+- A GPT-5.6 model balances reasoning quality, latency, and public-demo cost; the
+  production deployment may select the most reliable event model with
+  `OPENAI_MODEL`.
 - The public demo must remain testable without rebuilding through the judging
   period.
 - Time-box delivery so submission work begins even if optional polish remains.
@@ -94,7 +96,7 @@ bounded work, stable errors, no raw-input logging, and no response storage.
 **Files**
 
 - Create: `src/lib/evidence.ts`
-- Create: `src/lib/openai.ts`
+- Create: `src/lib/openai-gateway.ts`
 - Create: `src/lib/http.ts`
 - Create: `src/lib/rate-limit.ts`
 - Create: `src/app/api/analyze/route.ts`
@@ -112,8 +114,8 @@ Task 1
 1. Write red tests for stable validation, success, dependency-failure, and
    non-leaking error behavior at the route boundary.
 2. Add line-numbered evidence preparation and structured model-output schemas.
-3. Implement a private OpenAI service that requests GPT-5.6 Terra with
-   `store: false`, bounded output, and no raw logging.
+3. Implement a private OpenAI service that requests the configured GPT-5.6
+   event model with `store: false`, bounded output, and no raw logging.
 4. Implement request IDs, best-effort rate limiting, and stable error mapping.
 
 **Verification**

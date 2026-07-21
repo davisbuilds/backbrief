@@ -1,0 +1,5 @@
+docs/submission/*.aiff
+docs/submission/*.mp4
+docs/submission/*.webm
+docs/submission/video-raw/
+scripts/record-demo.mjs

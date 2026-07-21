@@ -9,3 +9,9 @@ coverage/
 .playwright-cli/
 playwright-report/
 test-results/
+.vercel
+docs/submission/*.aiff
+docs/submission/*.mp4
+docs/submission/*.webm
+docs/submission/contact-sheet.png
+docs/submission/video-raw/
