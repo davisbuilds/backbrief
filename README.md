@@ -10,9 +10,15 @@ Built for the **Developer Tools** track of OpenAI Build Week 2026.
 
 ## Try it
 
-The deployed app opens with a fictional, sanitized email-queue example. Check
-the consent box and click **Build my Backbrief**; no account or setup is needed.
-You can also paste your own coding session and `git diff`.
+**Live app: [backbrief.vercel.app](https://backbrief.vercel.app)**
+
+The app opens with a fictional, sanitized email-queue example. Check the consent
+box and click **Build my Backbrief**; no account or setup is needed. You can also
+paste your own coding session and `git diff`.
+
+![Backbrief evidence desk](docs/assets/backbrief-hero.png)
+
+![Backbrief grounded handoff](docs/assets/backbrief-handoff.png)
 
 ## Why it exists
 
