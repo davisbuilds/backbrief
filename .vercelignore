@@ -3,3 +3,4 @@ docs/submission/*.mp4
 docs/submission/*.webm
 docs/submission/video-raw/
 scripts/record-demo.mjs
+scripts/generate-narration.mjs

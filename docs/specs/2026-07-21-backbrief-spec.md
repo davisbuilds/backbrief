@@ -40,6 +40,8 @@ by `pnpm verify` and a successful fresh-browser run of the deployed sample flow.
   sent to OpenAI and requires explicit acknowledgement.
 - Raw session and diff text is not intentionally persisted or written to
   application logs, and model requests opt out of response storage.
+- The interface distinguishes Backbrief's lack of application storage from
+  OpenAI's provider-side API data controls.
 - Invalid, oversized, rate-limited, and unavailable-model paths return clear,
   non-sensitive recovery guidance.
 - The public repository documents setup, supported browsers, architecture,

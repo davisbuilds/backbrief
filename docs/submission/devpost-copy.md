@@ -51,11 +51,13 @@ the full flow without an account, repository, API key, or local installation.
 
 ## How we built it
 
-Backbrief is a Next.js and TypeScript app using two stateless OpenAI Responses
-API calls with GPT-5.6. Zod Structured Outputs constrain the initial handoff and
-each coaching note. The server adds stable `S1…Sn` and `D1…Dn` references before
-analysis, validates and size-bounds every boundary, requests `store: false`, and
-returns generic errors that never echo private evidence.
+Backbrief is a Next.js and TypeScript app with two stateless API routes powered
+by GPT-5.6. A completed brief makes four OpenAI Responses API requests: one
+grounded analysis and three coaching turns. Zod Structured Outputs constrain the
+initial handoff and each coaching note. The server adds stable `S1…Sn` and
+`D1…Dn` references before analysis, validates and size-bounds every boundary,
+requests `store: false`, and returns generic errors that never echo private
+evidence.
 
 The raw session and diff are used only for initial analysis. The coaching call
 receives only the generated question, teaching point, and developer answer.
@@ -76,8 +78,9 @@ schema let the model preserve that tension instead of collapsing it into a
 generic summary.
 
 The second challenge was privacy and scope. Agent transcripts may contain
-sensitive context, so Backbrief explicitly gates model use, avoids persistence
-and logging, bounds inputs, and keeps raw evidence out of the coaching call.
+sensitive context, so Backbrief explicitly gates model use, avoids application
+persistence and raw-input logging, bounds inputs, keeps raw evidence out of the
+coaching call, and explains that OpenAI's API data controls still apply.
 
 ## Accomplishments
 
@@ -85,7 +88,8 @@ and logging, bounds inputs, and keeps raw evidence out of the coaching call.
 - Auditable evidence-cited handoffs with exact source lines one click away.
 - Free-response coaching without scores, correctness labels, or merge verdicts.
 - A portable, printable HTML receipt generated locally with no raw evidence.
-- Twenty-seven passing behavioral tests plus lint, typecheck, and production build.
+- Edge-enforced rate limiting in front of the anonymous paid model routes.
+- Twenty-eight passing behavioral tests plus lint, typecheck, and production build.
 - Zero Semgrep findings and no detected lethal-trifecta co-location.
 - Verified desktop and mobile flows on the production deployment.
 

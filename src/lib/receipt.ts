@@ -182,7 +182,7 @@ export function buildReceiptHtml({ handoff, answers, coaching, generatedAt }: Re
 
     <footer>
       <span>BACKBRIEF / THE AGENT BUILT IT. YOU CAN EXPLAIN IT.</span>
-      <span>NO ACCOUNT · NO STORAGE · NO RAW EVIDENCE IN THIS FILE</span>
+      <span>LOCAL FILE · NO RAW EVIDENCE · NO REMOTE ASSETS</span>
     </footer>
   </main>
 </body>

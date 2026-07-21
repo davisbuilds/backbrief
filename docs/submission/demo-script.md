@@ -40,17 +40,23 @@ Two more questions probe the operational failure seam and an important test gap.
 Then Backbrief gives me a recap in my own language—the change is no longer
 something I have to take on faith.
 
-Behind the interface are two stateless OpenAI Responses API calls using GPT-5.6,
-with request storage disabled. Raw evidence goes only to the initial analysis.
-Coaching sees only the generated question, its teaching point, and my answer.
-Zod schemas bound every request and every structured response.
+From the recap, I can download a self-contained HTML receipt with the handoff, my
+explanations, and the coaching takeaways. It is generated locally, printable,
+and deliberately leaves the raw evidence behind.
+
+Behind the interface are two stateless API routes. A complete brief makes four
+OpenAI Responses API requests using GPT-5.6: one grounded analysis and three
+coaching turns. Request storage is disabled, and Backbrief itself has no database
+or raw-input logging. OpenAI's API data controls still apply. Raw evidence goes
+only to the initial analysis; coaching sees only the current question, teaching
+point, and my answer. Zod schemas bound every request and structured response.
 
 I built Backbrief with Codex from a blank directory. Codex helped research the
 rules, narrow the idea, write the product contract, drive red-green tests,
 implement the app, run security and browser checks, deploy it, and prepare this
 submission.
 
-The best decision was a scope cut: no O-auth, no database, no scoring, and no
+The best decision was a scope cut: no OAuth, no database, no scoring, and no
 generic importer. Just one complete teaching loop.
 
 Backbrief is live, open source, and free to try without a login. The agent built

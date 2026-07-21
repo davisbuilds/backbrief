@@ -244,7 +244,18 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
         <section className="workspace" aria-labelledby="evidence-heading">
           <div className="section-heading">
             <div><span className="section-number">01</span><h2 id="evidence-heading">Evidence desk</h2></div>
-            <p>Nothing is saved. Your evidence is sent to OpenAI only when you ask for analysis.</p>
+            <p>
+              Backbrief does not save your evidence. OpenAI may retain API content for
+              abuse monitoring under its{" "}
+              <a
+                href="https://developers.openai.com/api/docs/guides/your-data#data-retention-controls-for-abuse-monitoring"
+                target="_blank"
+                rel="noreferrer"
+              >
+                data controls
+              </a>
+              .
+            </p>
           </div>
 
           <div className="source-switch" aria-label="Evidence source">
@@ -276,7 +287,10 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
           <div className="launch-row">
             <label className="consent">
               <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} />
-              <span>I understand these inputs will be sent to OpenAI for analysis.</span>
+              <span>
+                I understand these inputs will be sent to OpenAI for analysis and handled
+                under its API data controls.
+              </span>
             </label>
             <button className="primary-button" disabled={!canAnalyze} onClick={analyze}>
               {busy ? "READING THE EVIDENCE…" : "BUILD MY BACKBRIEF →"}
@@ -383,7 +397,7 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
               <button className="primary-button" type="button" onClick={downloadReceipt}>
                 DOWNLOAD RECEIPT ↓
               </button>
-              <small aria-live="polite">{receiptStatus || "NO ACCOUNT · NO STORAGE · NO RAW INPUTS"}</small>
+              <small aria-live="polite">{receiptStatus || "NO ACCOUNT · NO APP STORAGE · NO RAW INPUTS"}</small>
             </div>
           </div>
           <div className="recap-list">
@@ -404,7 +418,7 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
 
       <footer>
         <span>BACKBRIEF / OPENAI BUILD WEEK 2026</span>
-        <span>NO ACCOUNTS · NO STORAGE · NO MERGE GATES</span>
+        <span>NO ACCOUNTS · NO APP STORAGE · NO MERGE GATES</span>
       </footer>
     </main>
   );

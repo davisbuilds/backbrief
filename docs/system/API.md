@@ -13,7 +13,12 @@ stable error shape. Browser clients are the only intended consumers.
 - Unknown request fields are rejected.
 - Raw evidence and model prompts are never logged.
 - OpenAI requests set `store: false` and have bounded output.
-- Best-effort anonymous rate limiting is applied before model work.
+- Backbrief does not persist request content. OpenAI may retain API content for
+  abuse monitoring under its documented data controls unless stricter account
+  controls apply.
+- Production applies a Vercel WAF fixed-window limit of 12 requests per 60
+  seconds per IP across `/api/*`. A best-effort in-process limiter provides a
+  second check before model work.
 
 Errors use:
 
@@ -118,4 +123,3 @@ Success response:
 
 The response teaches from the supplied evidence. It never returns a score,
 correct/incorrect verdict, code-quality verdict, or merge recommendation.
-

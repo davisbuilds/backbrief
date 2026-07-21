@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "demo:narrate": "node scripts/generate-narration.mjs",
+    "demo:record": "node scripts/record-demo.mjs"
   },
   "dependencies": {
     "next": "16.2.10",

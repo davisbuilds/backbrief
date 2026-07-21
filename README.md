@@ -69,9 +69,14 @@ flowchart LR
   generated entirely in the browser, escapes model and developer text, and
   carries evidence references without copying the raw source evidence.
 - OpenAI Responses API calls use `store: false`. Backbrief has no database,
-  accounts, analytics, or raw-input logging.
+  accounts, analytics, or raw-input logging. Backbrief does not retain submitted
+  evidence, but OpenAI may retain API content for abuse monitoring under its
+  [API data controls](https://developers.openai.com/api/docs/guides/your-data#data-retention-controls-for-abuse-monitoring).
 - Inputs and outputs are bounded and validated; model errors return generic,
   stable API responses without echoing private evidence.
+- The production deployment adds a Vercel WAF fixed-window limit of 12 requests
+  per minute per IP across `/api/*`; the in-process limiter remains a
+  defense-in-depth fallback.
 
 See [the API contract](docs/system/API.md) for exact request, response, and error
 shapes.
@@ -131,8 +136,8 @@ make the one important loop real and testable.
 ## Deliberate limits
 
 - Line references ground claims, but Backbrief is not a formal verifier.
-- The in-memory rate limiter is best-effort and not a distributed abuse-control
-  system.
+- The in-memory limiter is best-effort and not distributed; production relies
+  on the Vercel WAF rule for shared edge enforcement.
 - Inputs are currently pasted; provider-specific session importers are future
   work only if users repeatedly finish the core loop.
 

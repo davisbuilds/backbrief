@@ -1,4 +1,4 @@
-import { mkdir, rename } from "node:fs/promises";
+import { mkdir, readFile, rename } from "node:fs/promises";
 import path from "node:path";
 
 import { chromium } from "playwright";
@@ -88,7 +88,23 @@ await coaching;
 await page.waitForTimeout(6_000);
 
 await page.getByRole("button", { name: "SEE MY RECAP →" }).click();
+await page.locator(".receipt-offer").scrollIntoViewIfNeeded();
+await page.waitForTimeout(14_000);
+
+const receiptDownload = page.waitForEvent("download");
+await page.getByRole("button", { name: "DOWNLOAD RECEIPT ↓" }).click();
+const receipt = await receiptDownload;
+const receiptPath = await receipt.path();
+if (!receiptPath) throw new Error("Receipt download did not produce a local file.");
+
+const receiptHtml = await readFile(receiptPath, "utf8");
+await page.setContent(receiptHtml, { waitUntil: "load" });
+await page.getByRole("heading", { name: /queued email delivery/i }).waitFor();
+await page.waitForTimeout(10_000);
+await page.getByRole("heading", { name: "The reverse brief" }).scrollIntoViewIfNeeded();
 await page.waitForTimeout(22_000);
+await page.locator("footer").scrollIntoViewIfNeeded();
+await page.waitForTimeout(5_000);
 
 await context.close();
 await browser.close();
