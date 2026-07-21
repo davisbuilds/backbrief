@@ -120,3 +120,11 @@ Expected completion time: about 2 minutes.
 The primary judge path is the public web app in a current desktop or mobile
 browser. It has been exercised in Safari and Chromium at desktop and mobile
 viewport sizes. No extension, plugin, or local installation is required.
+
+## OpenAI feedback Session ID
+
+`019f84cc-479f-7950-a42b-0c8bdd61ba7b`
+
+## Demo narration
+
+The demo uses an AI-generated voice created with the OpenAI Speech API.

@@ -1,46 +1,57 @@
 ---
 date: 2026-07-21
 status: draft
-target-duration: 2m45s
+target-duration: 2m30s
+narration-model: gpt-4o-mini-tts
+narration-voice: marin
+narration-style: warm conversational technical founder at about 165 words per minute
 ---
 
 # Backbrief Demo Script
 
-Agent-written code can pass its tests before the person inheriting it can explain
-what changed. Backbrief closes that gap.
+Agent-written code can pass every test before the developer inheriting it can
+explain what changed. Backbrief closes that ownership gap.
 
-Give it the coding-agent session and the resulting git diff. This built-in sample
-is fictional: an agent moved email delivery from an API request into a retrying
-queue worker. Backbrief has no accounts or database, and it sends evidence to
-OpenAI only after explicit consent.
+It starts with two pieces of evidence: the coding-agent session, and the git diff
+that session produced. This built-in example is fictional. An agent moved email
+delivery out of an API request and into a retrying queue worker. There are no
+accounts and no database, and nothing is sent to OpenAI until I explicitly
+consent.
 
-When I build the Backbrief, GPT-5.6 receives line-numbered session and diff
-evidence. Structured Outputs turn that into a grounded handoff with three views:
-the requested intent, the actual implementation, and the consequences a human
-owner needs to carry. Every claim points back to session or diff lines. Selecting
-any citation opens the exact original lines, so the handoff is auditable instead
-of asking the developer to trust a fluent summary.
+Now I build the Backbrief. GPT-5.6 receives the session and diff with stable line
+numbers. Structured Outputs turn that evidence into a handoff with three clear
+views: what was intended, what was actually implemented, and which consequences
+the human owner now carries.
 
-This is deliberately not another approval bot. It does not score the change or
-decide whether to merge it. Instead, it asks me to brief the change back, one
+Most importantly, every claim is auditable. I can select a citation and inspect
+the exact original lines, right beside the explanation. I don't have to trust a
+confident-sounding summary.
+
+Backbrief is deliberately not another approval bot. It doesn't score the code or
+decide whether it should merge. Instead, it asks me to brief the change back, one
 question at a time.
 
-Here the first question catches the caller-visible contract: HTTP 202 means the
-message was accepted for background work, not delivered. I explain that in my
-own words. The coaching names what I saw, adds the missing nuance, and leaves one
-memorable takeaway. Two more questions probe the operational failure seam and a
-test limitation, then Backbrief produces a recap in my language.
+The first question catches the caller-visible contract. An H T T P two-oh-two
+means the message was accepted for background work; it was not delivered yet. I
+explain that in my own words. The coaching reflects what I understood, adds the
+missing nuance, and leaves me with one memorable takeaway.
 
-Behind the UI are two stateless OpenAI Responses API calls using GPT-5.6 and
-`store: false`. Raw session and diff text go only to the initial analysis;
-coaching receives the generated question and the developer's answer. Zod schemas
-bound every request and structured response.
+Two more questions probe the operational failure seam and an important test gap.
+Then Backbrief gives me a recap in my own language—the change is no longer
+something I have to take on faith.
+
+Behind the interface are two stateless OpenAI Responses API calls using GPT-5.6,
+with request storage disabled. Raw evidence goes only to the initial analysis.
+Coaching sees only the generated question, its teaching point, and my answer.
+Zod schemas bound every request and every structured response.
 
 I built Backbrief with Codex from a blank directory. Codex helped research the
-rules, narrow the idea, write the product spec and API contract, drive red-green
-tests, implement the app, run security and browser checks, deploy it, and prepare
-this submission. The most valuable choice was a scope cut: no OAuth, database,
-scoring, or generic importer—just one real teaching loop.
+rules, narrow the idea, write the product contract, drive red-green tests,
+implement the app, run security and browser checks, deploy it, and prepare this
+submission.
 
-Backbrief is live, free to try without login, and open source. The agent built it.
-Backbrief the change.
+The best decision was a scope cut: no O-auth, no database, no scoring, and no
+generic importer. Just one complete teaching loop.
+
+Backbrief is live, open source, and free to try without a login. The agent built
+it. Backbrief the change.

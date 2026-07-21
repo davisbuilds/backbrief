@@ -11,7 +11,9 @@ playwright-report/
 test-results/
 .vercel
 docs/submission/*.aiff
+docs/submission/*.wav
 docs/submission/*.mp4
 docs/submission/*.webm
 docs/submission/contact-sheet.png
+docs/submission/narration-disclosure.*
 docs/submission/video-raw/
