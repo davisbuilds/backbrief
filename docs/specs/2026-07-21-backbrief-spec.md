@@ -33,6 +33,9 @@ by `pnpm verify` and a successful fresh-browser run of the deployed sample flow.
   teaching after each answer and no numeric score, pass/fail label, or merge
   verdict.
 - The visitor can restart the experience or switch to bounded custom text input.
+- After completing all three questions, the visitor can download a
+  self-contained HTML receipt containing the handoff, evidence references,
+  answers, and coaching takeaways without raw session or diff text.
 - Before custom evidence is transmitted, the interface explains that it will be
   sent to OpenAI and requires explicit acknowledgement.
 - Raw session and diff text is not intentionally persisted or written to
@@ -63,6 +66,8 @@ The contract is measured by deterministic checks plus the deployed sample flow.
 - A no-login web experience with bundled sample and bounded custom inputs.
 - Grounded intent, implementation, consequence, questioning, teaching, and recap
   behaviors.
+- A browser-generated, printable HTML receipt with no external runtime assets or
+  raw source evidence.
 - Material GPT-5.6 use in the working product.
 - Public deployment, repository, documentation, and hackathon submission assets.
 

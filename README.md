@@ -28,6 +28,8 @@ is required.
 
 ![Backbrief grounded handoff](docs/assets/backbrief-handoff.png)
 
+![Backbrief portable HTML receipt](docs/assets/backbrief-receipt.png)
+
 ## Why it exists
 
 Coding agents can produce a working change faster than a developer can form a
@@ -41,6 +43,8 @@ The product has one deliberately narrow loop:
 2. Read an evidence-cited handoff: intent, implementation, consequences.
 3. Answer three questions, one at a time.
 4. Receive concise coaching and leave with a recap in your own words.
+5. Download a self-contained HTML receipt you can keep, print, or attach to a
+   pull request without including the raw session or diff.
 
 ## How it works
 
@@ -61,6 +65,9 @@ flowchart LR
   schemas.
 - Raw session and diff text are sent only to the analysis call. Coaching sees
   only the generated question, teaching point, and developer answer.
+- The finished recap can be downloaded as a self-contained HTML receipt. It is
+  generated entirely in the browser, escapes model and developer text, and
+  carries evidence references without copying the raw source evidence.
 - OpenAI Responses API calls use `store: false`. Backbrief has no database,
   accounts, analytics, or raw-input logging.
 - Inputs and outputs are bounded and validated; model errors return generic,
@@ -99,8 +106,9 @@ pnpm verify
 
 The route tests inject a fake model gateway. They verify behavior at the HTTP
 boundary, including malformed JSON, invalid evidence, rate limits, private-data
-non-disclosure, and the absence of scoring/verdict fields. The deployed path was
-also exercised end to end against GPT-5.6 and in desktop/mobile browsers.
+non-disclosure, and the absence of scoring/verdict fields. Receipt tests verify
+HTML escaping, self-containment, print styling, and safe filenames. The deployed
+path was also exercised end to end against GPT-5.6 and in desktop/mobile browsers.
 
 ## Built with Codex
 

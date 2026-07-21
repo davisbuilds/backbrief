@@ -41,6 +41,11 @@ finishes with a recap they can carry forward.
 Every evidence reference is interactive. Selecting it opens the exact original
 session or diff lines in an audit plate without leaving the handoff.
 
+After the third question, the developer can download a self-contained HTML
+receipt containing the thesis, cited claims, their own explanations, and the
+coaching takeaways. It is generated entirely in the browser and deliberately
+excludes the raw session and diff.
+
 The public app includes a fictional email-queue example, so judges can complete
 the full flow without an account, repository, API key, or local installation.
 
@@ -79,7 +84,8 @@ and logging, bounds inputs, and keeps raw evidence out of the coaching call.
 - A complete no-login teaching loop powered by real GPT-5.6 calls.
 - Auditable evidence-cited handoffs with exact source lines one click away.
 - Free-response coaching without scores, correctness labels, or merge verdicts.
-- Twenty-four passing behavioral tests plus lint, typecheck, and production build.
+- A portable, printable HTML receipt generated locally with no raw evidence.
+- Twenty-seven passing behavioral tests plus lint, typecheck, and production build.
 - Zero Semgrep findings and no detected lethal-trifecta co-location.
 - Verified desktop and mobile flows on the production deployment.
 
@@ -112,6 +118,7 @@ Backbrief will remain educational and non-gating.
    its exact source lines.
 5. Answer each of the three questions in a sentence or two and continue to the
    recap.
+6. Select **Download receipt** and open the resulting self-contained HTML file.
 
 Expected completion time: about 2 minutes.
 

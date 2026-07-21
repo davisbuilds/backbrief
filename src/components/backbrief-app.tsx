@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import type { Coaching, Handoff } from "../lib/contracts";
 import { resolveEvidenceReference, type EvidenceExcerpt } from "../lib/evidence";
+import { buildReceiptHtml, receiptFilename } from "../lib/receipt";
 
 type Source = "sample" | "custom";
 type Stage = "evidence" | "handoff" | "recap";
@@ -96,6 +97,7 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [activeReference, setActiveReference] = useState<string | null>(null);
+  const [receiptStatus, setReceiptStatus] = useState("");
 
   const canAnalyze =
     consent && sessionText.trim().length >= 40 && diffText.trim().length >= 40 && !busy;
@@ -196,7 +198,23 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
     setAnswer("");
     setError("");
     setActiveReference(null);
+    setReceiptStatus("");
     requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
+  }
+
+  function downloadReceipt() {
+    if (!handoff || stage !== "recap") return;
+
+    const html = buildReceiptHtml({ handoff, answers, coaching, generatedAt: new Date() });
+    const url = URL.createObjectURL(new Blob([html], { type: "text/html;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = receiptFilename(handoff.title);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    requestAnimationFrame(() => URL.revokeObjectURL(url));
+    setReceiptStatus("Receipt downloaded · generated locally");
   }
 
   return (
@@ -352,6 +370,22 @@ export function BackbriefApp({ sampleSession, sampleDiff }: Props) {
           <p className="eyebrow">BACKBRIEF COMPLETE</p>
           <h2 id="recap-heading">You can carry the change now.</h2>
           <p className="recap-lede">Three explanations, three durable takeaways, one change you no longer have to take on faith.</p>
+          <div className="receipt-offer">
+            <div>
+              <p>TAKE IT WITH YOU / HTML RECEIPT</p>
+              <h3>Keep the handoff. Leave the raw evidence.</h3>
+              <span>
+                A self-contained, printable record of the thesis, cited claims, your
+                explanations, and the takeaways you earned. Generated only in this browser.
+              </span>
+            </div>
+            <div className="receipt-actions">
+              <button className="primary-button" type="button" onClick={downloadReceipt}>
+                DOWNLOAD RECEIPT ↓
+              </button>
+              <small aria-live="polite">{receiptStatus || "NO ACCOUNT · NO STORAGE · NO RAW INPUTS"}</small>
+            </div>
+          </div>
           <div className="recap-list">
             {handoff.questions.map((question, index) => (
               <article key={question.id}>
